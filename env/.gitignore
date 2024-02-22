@@ -1,0 +1,6 @@
+control.db
+pyvenv.cfg
+__pycache__
+Scripts
+share
+Lib
