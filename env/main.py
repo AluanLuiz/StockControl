@@ -40,19 +40,6 @@ class StockControl:
     def login_valid(self):
         cg.log.init_log()
     
-    # def init_login_screen(self):
-    #     login_width = 250
-    #     login_height = 250
-    #     screen_width = self.master.winfo_screenwidth()
-    #     screen_height = self.master.winfo_screenheight()
-    #     login_x = (screen_width - login_width) // 2
-    #     login_y = (screen_height - login_height) // 2
-
-    #     login_window = cg.tk.Toplevel(self.master)
-    #     login_window.title("Login")
-    #     login_window.geometry(f"{login_width}x{login_height}+{login_x}+{login_y}")  # Definir dimensões e posição
-    #     login_app = cg.log.Login(login_window)
-
 #------------------------------------------
 if __name__ == "__main__":
     app = cg.tk.Tk()
