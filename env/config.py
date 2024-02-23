@@ -14,7 +14,14 @@ def init_config():
     db_path = os.path.join(dir_atual, "db", "control.db")
 
     database.create_DB(db_path)
-
+#------------------------------------------
+#Caminho imagens
+image_path = "env/image"
+default_images = {
+    "user_icon": os.path.join(image_path, "user_icon1.png"),
+    "product_icon": os.path.join(image_path, "product_icon.png"),
+    "warehouse_icon": os.path.join(image_path, "warehouse_icon1.png")
+}
 #------------------------------------------
 #Modulos _py
 import log

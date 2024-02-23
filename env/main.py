@@ -8,34 +8,57 @@ class StockControl:
         self.master.title("Controle de Estoque")
         self.conect = cg.sql.connect(cg.db_path)
         self.start_config()
+          
+        self.frame_title = cg.tk.Frame(self.master)
+        self.frame_title.grid(row=0, column=0, columnspan=4, sticky="ew")
         
-        self.font_1 = cg.font.Font(family="Arial", size=18)
-        self.font_2 = cg.font.Font(family="Arial", size=16)
-        self.font_3 = cg.font.Font(family="Arial", size=12)
+        self.frame_buttons = cg.tk.Frame(self.master)
+        self.frame_buttons.grid(row=1, column=0, columnspan=4, sticky="ew")
         
-        self.title = cg.tk.Label(self.master, text="Controle de Estoque", font=self.font_1)
-        self.title.pack(anchor="w", padx=15, pady=5)
-        # Adicione aqui a inicialização de outros componentes da tela principal
-        self.bt_cadProdut = cg.tk.Button(self.master, text="Cadastrar Produto", font=self.font_2)
-        self.bt_cadProdut.pack(anchor="w", padx=15, pady=5)
+        self.frame_list = cg.tk.Frame(self.master)
+        self.frame_list.grid(row=2, column=0, columnspan=4, sticky="nsew")
         
-        self.bt_cadProdut = cg.tk.Button(self.master, text="Login", font=self.font_2, command=self.login_valid)
-        self.bt_cadProdut.pack(anchor="w", padx=15, pady=5)
+        self.master.grid_rowconfigure(2, weight=1)
+        self.master.grid_columnconfigure((0, 1, 2, 3), weight=1)
         
-        self.listViewer = cg.tk.Listbox(self.master, selectmode=cg.tk.MULTIPLE, height=20, width=88, font=self.font_3)
-        self.listViewer.pack(anchor="e", padx=15, pady=5)
-
-        # self.bt_reload = cg.tk.Button(master, text="Atualizar  ", font=self.font_2, command=self.load_listview)
-        # self.bt_reload.grid(row=2, column=2, pady=10)
-        self.bt_darBaixa = cg.tk.Button(self.master, text="Dar Baixa", font=self.font_2)
-        self.bt_darBaixa.pack(anchor="w", padx=15, pady=5)
+        self.add_title()
+        self.add_list()
+        self.add_Btn()
+     
+    #--------------------------
+    
+    def add_title(self):
+        font_1 = ("Arial", 20)
+        title = cg.tk.Label(self.frame_title, text="Controle de Estoque", font=font_1)
+        title.pack(pady=10)
+        
+    def add_list(self):
+        font_3 = ("Arial", 14)
+        listViewer = cg.tk.Listbox(self.frame_list, selectmode=cg.tk.MULTIPLE, height=20, width=90, font=font_3)
+        listViewer.pack(expand=True, fill="both", padx=10, pady=10)
+    
+    def add_Btn(self):
+        font_2 = ("Arial", 16)
+        button_width = 10
+        button_height = 1
+        #---------
+        #--------- ↓ Botão cadastro de produto
+        bt_cadProdut = cg.tk.Button(self.frame_buttons, text="Cadastrar", font=font_2, width=button_width, height=button_height)
+        bt_cadProdut.grid(row=0, column=0, padx=10, pady=10)
+        #--------- 
+        #--------- ↓ Botão dar baixa (retirada do estoque)
+        bt_darBaixa = cg.tk.Button(self.frame_buttons, text="Dar Baixa", font=font_2, width=button_width, height=button_height)
+        bt_darBaixa.grid(row=0, column=1, padx=10, pady=10)
+        #---------
+        #--------- ↓ Botão de login
+        self.image_login = cg.tk.PhotoImage(file=cg.default_images["user_icon"])
+        self.bt_login = cg.tk.Button(self.frame_buttons, image=self.image_login, command=self.login_valid, width=52, height=52, bd=0, highlightthickness=0)
+        self.bt_login.grid(row=0, column=2, padx=10, pady=10)
         
     #--------------------------
     
     def start_config(self):
         cg.init_config()        
-    
-    #--------------------------
       
     def login_valid(self):
         cg.log.init_log()
