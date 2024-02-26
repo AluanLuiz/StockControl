@@ -6,20 +6,20 @@ class StockControl:
     def __init__(self, master):
         self.master = master
         self.master.title("Controle de Estoque")
-        self.conect = cg.sql.connect(cg.db_path)
+        self.conect = cg.sql.connect(cg.db_cam)
         self.start_config()
           
-        self.frame_title = cg.tk.Frame(self.master)
-        self.frame_title.grid(row=0, column=0, columnspan=4, sticky="ew")
+        self.frame_title = cg.tk.Frame(self.master, bg="#D9D9D9")
+        self.frame_title.grid(row=0, column=0, columnspan=5, sticky="ew")
         
-        self.frame_buttons = cg.tk.Frame(self.master)
-        self.frame_buttons.grid(row=1, column=0, columnspan=4, sticky="ew")
+        self.frame_buttons = cg.tk.Frame(self.master, bd=2, bg="#D9D9D9")
+        self.frame_buttons.grid(row=1, column=0, columnspan=5, sticky="ew")
         
-        self.frame_list = cg.tk.Frame(self.master)
-        self.frame_list.grid(row=2, column=0, columnspan=4, sticky="nsew")
+        self.frame_list = cg.tk.Frame(self.master, bg="#D9D9D9")
+        self.frame_list.grid(row=2, column=0, columnspan=5, sticky="nsew")
         
         self.master.grid_rowconfigure(2, weight=1)
-        self.master.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        self.master.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
         
         self.add_title()
         self.add_list()
@@ -29,7 +29,7 @@ class StockControl:
     
     def add_title(self):
         font_1 = ("Arial", 20)
-        title = cg.tk.Label(self.frame_title, text="Controle de Estoque", font=font_1)
+        title = cg.tk.Label(self.frame_title, bg="#D9D9D9", text="Controle de Estoque", font=font_1)
         title.pack(pady=10)
         
     def add_list(self):
@@ -39,21 +39,30 @@ class StockControl:
     
     def add_Btn(self):
         font_2 = ("Arial", 16)
+        font_4 = ("Arial", 14)
         button_width = 10
-        button_height = 1
+        button_height = 2
         #---------
         #--------- ↓ Botão cadastro de produto
-        bt_cadProdut = cg.tk.Button(self.frame_buttons, text="Cadastrar", font=font_2, width=button_width, height=button_height)
-        bt_cadProdut.grid(row=0, column=0, padx=10, pady=10)
+        bt_cadProdut = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text="Cadastrar", font=font_2, width=button_width, height=button_height, bd=0, highlightthickness=0)
+        bt_cadProdut.grid(row=0, column=2, padx=10, pady=10)
         #--------- 
         #--------- ↓ Botão dar baixa (retirada do estoque)
-        bt_darBaixa = cg.tk.Button(self.frame_buttons, text="Dar Baixa", font=font_2, width=button_width, height=button_height)
+        bt_darBaixa = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text="Dar Baixa", font=font_2, width=button_width, height=button_height, bd=0, highlightthickness=0)
         bt_darBaixa.grid(row=0, column=1, padx=10, pady=10)
+        #---------
+        #--------- ↓ Botão dar baixa (retirada do estoque)
+        bt_Requisition_order = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text=("Ordem de \n Requisição"), font=font_4, width=button_width, height=button_height, bd=0, highlightthickness=0)
+        bt_Requisition_order.grid(row=0, column=0, padx=10, pady=10)
+        #--------- 
+        #--------- ↓ Botão dar baixa (retirada do estoque)
+        bt_cad_user= cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text="Cadastrar \n usuário", font=font_4, width=button_width, height=button_height, bd=0, highlightthickness=0)
+        bt_cad_user.grid(row=0, column=3, padx=10, pady=10)
         #---------
         #--------- ↓ Botão de login
         self.image_login = cg.tk.PhotoImage(file=cg.default_images["user_icon"])
-        self.bt_login = cg.tk.Button(self.frame_buttons, image=self.image_login, command=self.login_valid, width=52, height=52, bd=0, highlightthickness=0)
-        self.bt_login.grid(row=0, column=2, padx=10, pady=10)
+        self.bt_login = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", image=self.image_login, command=self.login_valid, width=52, height=52, bd=0, highlightthickness=0)
+        self.bt_login.grid(row=0, column=4, padx=10, pady=10)
         
     #--------------------------
     

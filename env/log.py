@@ -7,7 +7,7 @@ class Login:
 
         self.master.title("Login")
 
-        self.conect = cg.sql.connect(cg.db_path)
+        self.conect = cg.sql.connect(cg.db_cam)
 
         self.font_Title = cg.font.Font(family="Arial", size=16)
         self.font_Regular = cg.font.Font(family="Arial", size=14)
@@ -89,4 +89,4 @@ def init_log():
     app = Login(log)
     log.geometry("250x250")
     log.mainloop()
-    return app.login_true
+    #return app.login_true
