@@ -11,7 +11,7 @@ class Login:
 
         self.font_Title = cg.font.Font(family="Arial", size=16)
         self.font_Regular = cg.font.Font(family="Arial", size=14)
-        self.font_text = cg.font.Font(family="Arial", size=10)
+        self.font_text = cg.font.Font(family="Arial", size=13)
 
         #--------------------
         self.title = cg.tk.Label(logon, text="Login", font=self.font_Title)
@@ -63,10 +63,14 @@ class Login:
                 return False
 
             cg.messagebox.showinfo("Login", "Bem Vindo, {}".format(registro_User[1]))
+            
             self.iden = registro_User[0]
+            self.name = registro_User[1]
+            self.lvl = registro_User[3]
+            
             #self.export_ID()
             self.master.destroy()
-            return True
+            
             
         except cg.sql.Error as e:
             cg.messagebox.showerror("Erro no Banco de Dados", str(e))
@@ -89,4 +93,4 @@ def init_log():
     app = Login(log)
     log.geometry("250x250")
     log.mainloop()
-    #return app.login_true
+    return app.iden, app.name, app.lvl
