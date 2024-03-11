@@ -29,9 +29,9 @@ default_images = {
 #Modulos _py
 import log #login
 import main #Principal
-import register_prod #Registrar produto
-import register_user #Registrar usuário
-import requisition_order #Ordem de Requisiçao
-import write_off_prod #Dar Baixa estoque/produto
+import register_prod as rp #Registrar produto
+import register_user as ru #Registrar usuário
+import requisition_order as ro#Ordem de Requisiçao
+import write_off_prod as wp #Dar Baixa estoque/produto
 
 #from log import Id_user
