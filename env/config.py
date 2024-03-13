@@ -31,7 +31,6 @@ import log #login
 import main #Principal
 import register_prod as rp #Registrar produto
 import register_user as ru #Registrar usuário
-import requisition_order as ro#Ordem de Requisiçao
+import requisition_order as ro #Ordem de Requisiçao
 import write_off_prod as wp #Dar Baixa estoque/produto
-
-#from log import Id_user
+import forms_fornec as ff #Registro de novo fornecedor

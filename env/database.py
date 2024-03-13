@@ -93,9 +93,8 @@ def create_DB(db_caminho):
                     bar_code TEXT NOT NULL,
                     name_simple TEXT NOT NULL,
                     description TEXT NOT NULL,
-                    quantidade_disponivel INTEGER NOT NULL,
-                    Local_arm TEXT NOT NULL CHECK (length(Local_arm) <= 4),
-                    source_price REAL,
+                    quant_dispon INTEGER NOT NULL,
+                    Local_arm TEXT NOT NULL CHECK (length(Local_arm) <= 5),
                     id_fornecedor INTEGER,
                     FOREIGN KEY (id_fornecedor) REFERENCES Fornecedores(id_fornecedor)
                 )

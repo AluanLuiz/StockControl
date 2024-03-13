@@ -25,6 +25,7 @@ class StockControl:
         self.add_list()
         self.add_Btn()
         self.load_listview()
+        self.start_timer()
      
     #--------------------------
     
@@ -73,12 +74,14 @@ class StockControl:
         # self.bt_login.grid(row=0, column=4, padx=10, pady=10)
         
     #--------------------------
-    
+    def start_timer(self, interval_ms=5000):
+        self.master.after(interval_ms, self.load_listview)
+        
     def load_listview(self):
         self.listViewer.delete(0, cg.tk.END)
         
         cursor = self.conect.cursor()
-        cursor.execute('''SELECT bar_code, name_simple, description,local_arm, quantidade_disponivel
+        cursor.execute('''SELECT bar_code, name_simple, description, local_arm, quant_dispon
                        FROM Products
                        ''')
         load_prod = cursor.fetchall()
@@ -88,7 +91,7 @@ class StockControl:
             self.listViewer.insert(cg.tk.END, info_prod)
             
     def format_info(self, item):
-        return f"C.B. {item[0]}, Nome: {item[1]}, descrição: {item[2]} | Local:{item[3]} - Quantidade: {item[4]}"\
+        return f"C.B. {item[0]}, Nome: {item[1]}, descrição: {item[2]} | Local: {item[3]} - Quantidade: {item[4]}"\
     
     #--------------------------
     def start_config(self):
