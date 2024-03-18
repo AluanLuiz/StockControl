@@ -1,6 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox as msg
 from tkinter import font
+
+import re
+import string
 
 #------------------------------------------
 #Banco de Dados

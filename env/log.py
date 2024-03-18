@@ -8,7 +8,8 @@ class Login:
         self.master.title("Login")
 
         self.conect = cg.sql.connect(cg.db_cam)
-
+        self.start_config()
+        
         self.font_Title = cg.font.Font(family="Arial", size=16)
         self.font_Regular = cg.font.Font(family="Arial", size=14)
         self.font_text = cg.font.Font(family="Arial", size=13)
@@ -39,7 +40,11 @@ class Login:
         #self.button_login.grid(row=5, column=0, columnspan=2, padx=15, pady=6)
 
     #------------------------------------------
-
+    
+    def start_config(self):
+        cg.init_config()   
+        
+    #---------------------
     def entrar(self):
         try:
             cursor = self.conect.cursor()
@@ -48,21 +53,21 @@ class Login:
             Password = self.entry_password.get()
 
             if userName == "" or Password == "":
-                cg.messagebox.showerror("Erro", "Por favor, insira o nome de usuário e senha.")
+                cg.msg.showerror("Erro", "Por favor, insira o nome de usuário e senha.")
                 return
 
             cursor.execute("SELECT id_user, name_user, password, user_level FROM Users WHERE name_user = ?", (userName,))
             registro_User = cursor.fetchone()
                         
             if registro_User is None:
-                cg.messagebox.showerror("Erro", "Usuário incorreto ou não existe.")
+                cg.msg.showerror("Erro", "Usuário incorreto ou não existe.")
                 return False
 
             if Password != registro_User[2]:
-                cg.messagebox.showerror("Erro", "Senha incorreta.")
+                cg.msg.showerror("Erro", "Senha incorreta.")
                 return False
 
-            cg.messagebox.showinfo("Login", "Bem Vindo, {}".format(registro_User[1]))
+            cg.msg.showinfo("Login", "Bem Vindo, {}".format(registro_User[1]))
             
             self.iden = registro_User[0]
             self.name = registro_User[1]
@@ -73,19 +78,9 @@ class Login:
             
             
         except cg.sql.Error as e:
-            cg.messagebox.showerror("Erro no Banco de Dados", str(e))
+            cg.msg.showerror("Erro no Banco de Dados", str(e))
             return False
         
-    def export_ID(self):
-        id_on = self.iden
-        ident = cg.tk.Toplevel(self.master)
-        Id_user(ident, id_on)
-
-class Id_user:
-    def ID_user_ON(self, id_on):
-        id = id_on
-        return id
-
 #------------------------------------------
 
 def init_log():

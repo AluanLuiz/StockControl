@@ -54,7 +54,7 @@ class RegisterProd:
         self.quant_sb = cg.tk.Spinbox(self.frameT, font=font_2, width=20, from_= 1, to= 9999)
         self.quant_sb.grid(row=3, column=2, columnspan=2, padx=10, pady=10)
         #---------
-        #--------- ↓ Local_armazenado (nicho)
+        #--------- ↓ id_localazenado (nicho)
         self.local_lbl = cg.tk.Label(self.frameT, font=font_1, text="Local Armazenado (Z-XY):")
         self.local_lbl.grid(row=4, column=0, padx=10, pady=10)
         #--
@@ -99,59 +99,59 @@ class RegisterProd:
         try:
             # -- Verificação do Código do Porduto/Material
             if code_bar.strip() == "":
-                cg.messagebox.showerror("Erro", "Códigos de Barras não pode ser vazio.")
+                cg.msg.showerror("Erro", "Códigos de Barras não pode ser vazio.")
                 return "invalido"
             
             else:
                 cursor.execute("SELECT bar_code FROM Products WHERE bar_code = ?", (code_bar,))
                 codebar_reference = cursor.fetchone()
                 if codebar_reference and codebar_reference[0] == code_bar:
-                    cg.messagebox.showerror("Erro", "O Código do Produto já existe.")
+                    cg.msg.showerror("Erro", "O Código do Produto já existe.")
                     return "invalido"
             
             # -- Verificação do Nome
             if name_simple.strip() == "":
-                cg.messagebox.showerror("Erro", "Nome do produto não pode ser vazio.")
+                cg.msg.showerror("Erro", "Nome do produto não pode ser vazio.")
                 return "invalido"
             
             else:
                 cursor.execute("SELECT name_simple FROM Products WHERE name_simple = ?", (name_simple,))
                 name_reference = cursor.fetchone()
                 if name_reference and name_reference[0] == name_simple:
-                    cg.messagebox.showerror("Erro", "Um produto com esse nome, já existe.")
+                    cg.msg.showerror("Erro", "Um produto com esse nome, já existe.")
                     return "invalido"
             
             # -- Verificação da Descricao
             if descr.strip() == "":
-                cg.messagebox.showerror("Erro", "Descrição do produto não pode ser vazio.")
+                cg.msg.showerror("Erro", "Descrição do produto não pode ser vazio.")
                 return "invalido"
             
             # -- Verificação da Quantide
             quanti = int(quant)
             if quanti <= 0:
-                cg.messagebox.showerror("Erro", "Quantidade do Produto deve ser no mínimo 1")
+                cg.msg.showerror("Erro", "Quantidade do Produto deve ser no mínimo 1")
                 return "invalido"
             
             # -- Verificando se o nicho está ocupado
             if loc.strip() == "":
-                cg.messagebox.showerror("Erro", "Local de armazenamento não pode ser vazio.")
+                cg.msg.showerror("Erro", "Local de armazenamento não pode ser vazio.")
                 return "invalido"
             
             else:
-                cursor.execute("SELECT local_arm FROM Products WHERE local_arm  = ?", (loc,))
+                cursor.execute("SELECT id_local FROM Products WHERE id_local  = ?", (loc,))
                 loc_reference = cursor.fetchone()
                 if loc_reference and loc_reference[0] == loc:
-                    cg.messagebox.showerror("Erro", "O local já está ocupado.")
+                    cg.msg.showerror("Erro", "O local já está ocupado.")
                     return "invalido"
             
             # -- Verificação do Fornecedor
             if fornec.strip() == "":
-                cg.messagebox.showerror("Erro", "O Fornecedor não pode ser vazio.")
+                cg.msg.showerror("Erro", "O Fornecedor não pode ser vazio.")
                 return "invalido"                          
                
         except cg.sql.Error as e:
             #print("Erro ao salvar o registro do produto:", e)
-            cg.messagebox.showerror("Erro", "Não foi possível salvar o registro do produto", e)
+            cg.msg.showerror("Erro", "Não foi possível salvar o registro do produto", e)
             return
         finally:
             cursor.close()
@@ -177,21 +177,21 @@ class RegisterProd:
                 fornec_reference = cursor.fetchone()
                 if fornec_reference is None:
                     confirm_msg = f"O fornecedor '{fornec}' não foi encontrado. Deseja registrá-lo?"
-                    if cg.messagebox.askyesno("Confirmação", confirm_msg):
-                        self.forms_fornec()
+                    if cg.msg.askyesno("Confirmação", confirm_msg):
+                        cg.ff.init_regis_fornec()
                         return
                     else:
-                        cg.messagebox.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
+                        cg.msg.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
                         print("Fornecedor não confirmado.")
                         return "invalido"
                     
                 else:
                     confirm_msg = f"O fornecedor '{fornec}' foi encontrado. Deseja mantê-lo no registro?"
-                    if cg.messagebox.askyesno("Confirmação", confirm_msg):
+                    if cg.msg.askyesno("Confirmação", confirm_msg):
                         id_f = fornec_reference[0]
                         print("Fornecedor confirmado.")
                     else:
-                        cg.messagebox.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
+                        cg.msg.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
                         print("Fornecedor não confirmado.")
                         return "invalido"
                     
@@ -200,35 +200,35 @@ class RegisterProd:
                 fornec_reference = cursor.fetchone()
                 if fornec_reference is None:
                     confirm_msg = f"O fornecedor com o CNPJ '{fornec}' não foi encontrado. Deseja registrá-lo?"
-                    if cg.messagebox.askyesno("Confirmação", confirm_msg):
-                        self.forms_fornec()
+                    if cg.msg.askyesno("Confirmação", confirm_msg):
+                        cg.ff.init_regis_fornec()
                         return
                     else:
-                        cg.messagebox.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
+                        cg.msg.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
                         print("Fornecedor não confirmado.")
                         return "invalido"
                 else:
                     confirm_msg = f"O fornecedor '{fornec}' foi encontrado. Deseja mantê-lo no registro?"
-                    if cg.messagebox.askyesno("Confirmação", confirm_msg):
+                    if cg.msg.askyesno("Confirmação", confirm_msg):
                         id_f = fornec_reference[0]
                         print("Fornecedor confirmado.")
                     else:
-                        cg.messagebox.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
+                        cg.msg.showerror("Aviso", "Por favor, coloque o fornecedor correto.")
                         print("Fornecedor não confirmado.")
                         return "invalido"
         
             
             try:
-                cursor.execute("INSERT INTO Products (bar_code, name_simple, description, quant_dispon, local_arm, id_fornecedor) VALUES (?, ?, ?, ?, ?, ?)",
+                cursor.execute("INSERT INTO Products (bar_code, name_simple, description, qtde, id_local, id_fornecedor) VALUES (?, ?, ?, ?, ?, ?)",
                                (code_bar, name_simple, descr, quant, loc, id_f))
                 self.conect.commit()
-                cg.messagebox.showinfo("Sucesso", "Registro do produto salvo com sucesso!") 
+                cg.msg.showinfo("Sucesso", "Registro do produto salvo com sucesso!") 
                 self.end_ents()
                 cursor.close()
                 
             except cg.sql.Error as e:
                 #print("Erro ao salvar o registro do produto:", e)
-                cg.messagebox.showerror("Erro", "Não foi possível salvar o registro do produto", e)
+                cg.msg.showerror("Erro", "Não foi possível salvar o registro do produto", e)
                 return
             finally:
                 cursor.close()

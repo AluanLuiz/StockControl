@@ -25,7 +25,7 @@ class StockControl:
         self.add_list()
         self.add_Btn()
         self.load_listview()
-        self.start_timer()
+        self.reload()
      
     #--------------------------
     
@@ -34,8 +34,8 @@ class StockControl:
         self.title = cg.tk.Label(self.frame_title, bg="#D9D9D9", text="Controle de Estoque", font=font_1)
         self.title.pack(pady=10)
         
-        self.log_user_lbl = cg.tk.Label(self.frame_title, bg="#D9D9D9", text="None", font=("Arial", 12))
-        self.log_user_lbl.pack(pady=10)
+        # self.log_user_lbl = cg.tk.Label(self.frame_title, bg="#D9D9D9", text="None", font=("Arial", 12))
+        # self.log_user_lbl.pack(pady=10)
         
     def add_list(self):
         font_3 = ("Arial", 14)
@@ -50,7 +50,7 @@ class StockControl:
         #---------
         #--------- ↓ Botão cadastro de produto
         self.bt_cadProdut = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text="Cadastrar", font=font_2, 
-                                         width=button_width, height=button_height, bd=0, highlightthickness=0, command=self.cmd_cadProd)
+                                         width=button_width, height=button_height, bd=0, highlightthickness=0, command=self.cmd_regisProd)
         self.bt_cadProdut.grid(row=0, column=2, padx=10, pady=10)
         #--------- 
         #--------- ↓ Botão dar baixa (retirada do estoque)  
@@ -74,14 +74,23 @@ class StockControl:
         # self.bt_login.grid(row=0, column=4, padx=10, pady=10)
         
     #--------------------------
+    
+    # def clear_terminal(self):
+    #     cg.os.system('cls' if cg.os.name == 'nt' else 'clear')
+    
+    def reload(self):
+        # self.clear_terminal()
+        self.start_timer()
+        self.load_listview()
+    
     def start_timer(self, interval_ms=5000):
-        self.master.after(interval_ms, self.load_listview)
+        self.master.after(interval_ms, self.reload)
         
     def load_listview(self):
         self.listViewer.delete(0, cg.tk.END)
         
         cursor = self.conect.cursor()
-        cursor.execute('''SELECT bar_code, name_simple, description, local_arm, quant_dispon
+        cursor.execute('''SELECT bar_code, name_simple, description, id_local, qtde
                        FROM Products
                        ''')
         load_prod = cursor.fetchall()
@@ -89,9 +98,10 @@ class StockControl:
         for regist in load_prod:
             info_prod = self.format_info(regist)
             self.listViewer.insert(cg.tk.END, info_prod)
+            # print(info_prod)
             
     def format_info(self, item):
-        return f"C.B. {item[0]}, Nome: {item[1]}, descrição: {item[2]} | Local: {item[3]} - Quantidade: {item[4]}"\
+        return f"C.B. {item[0]}, {item[1]}, descrição: {item[2]} | Local: {item[3]} - Quantidade: {item[4]}"\
     
     #--------------------------
     def start_config(self):
@@ -103,21 +113,24 @@ class StockControl:
     #         self.log_user_lbl.config(text=f"{self.name} - {self.ident} ({self.lvl})")
     
     #--------------------------
+    #--↓ Comandos dos botões:
     
-    def cmd_cadProd(self):
+    def cmd_regisProd(self):
         cg.rp.init_regis_prod()
-          
-    
+        
+    def cmd_regisFornec(self):
+        cg.ff.init_regis_fornec()         
+        
 #------------------------------------------
 
 if __name__ == "__main__":
     iden, name, lvl = cg.log.init_log()
-           
+         
     app = cg.tk.Tk()
     app.geometry("800x600")
     main_app = StockControl(app)
     
-    if iden:
-        main_app.log_user_lbl.config(text=f"{name} - {iden} ({lvl})")
+    # if iden:
+    #     main_app.log_user_lbl.config(text=f"{name} - {iden} ({lvl})")
         
     app.mainloop()
