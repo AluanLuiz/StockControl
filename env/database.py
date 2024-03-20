@@ -46,9 +46,33 @@ def create_DB(db_caminho):
                 CREATE TABLE Local (
                     id_local INTEGER PRIMARY KEY AUTOINCREMENT,
                     z INTEGER NOT NULL,
-                    x TEXT CHECK (length(x) = 1) NOT NULL,
+                    x TEXT NOT NULL,
                     y INTEGER NOT NULL
                 )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE Stock (
+                    id_interne INTEGER PRIMARY KEY AUTOINCREMENT,
+                    code_interne TEXT NOT NULL,
+                    produt INTEGER,
+                    local INTEGER,
+                    FOREIGN KEY (produt) REFERENCES Products(id_prod),
+                    FOREIGN KEY (local) REFERENCES Local(id_local)
+                )           
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE Orders (
+                    id_order INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user INTEGER,
+                    code_interne INTEGER,
+                    solicitante TEXT NOT NULL,
+                    setor TEXT,
+                    date_time TEXT NOT NULL,
+                    FOREIGN KEY (user) REFERENCES Users(id_user),
+                    FOREIGN KEY (code_interne) REFERENCES Stock(id_interne)
+                )                
             ''')
             
             # Inserir usuário mestre
@@ -57,9 +81,10 @@ def create_DB(db_caminho):
                     VALUES (?, ?, ?)
                 ''', ('Admin', 'Teste1', '4'))
             
-            valores_z = list(range(1, 100))
-            valores_x = list(cg.string.ascii_uppercase)
-            valores_y = list(range(1, 100))
+            #Colocando os valores na tabela Local
+            valores_z = list(cg.string.ascii_uppercase)
+            valores_x = list(range(1, 10))
+            valores_y = list(range(1, 16))
             
             for z in valores_z:
                 for x in valores_x:
@@ -114,7 +139,6 @@ def create_DB(db_caminho):
                     bar_code TEXT NOT NULL,
                     name_simple TEXT NOT NULL,
                     description TEXT NOT NULL,
-                    quant_dispon INTEGER NOT NULL,
                     qtde INTEGER NOT NULL,
                     id_local INTEGER,
                     id_fornecedor INTEGER,
@@ -144,14 +168,46 @@ def create_DB(db_caminho):
                 CREATE TABLE Local (
                     id_local INTEGER PRIMARY KEY AUTOINCREMENT,
                     z INTEGER NOT NULL,
-                    x TEXT NOT NULL CHECK (length(x) = 1),
+                    x TEXT NOT NULL,
                     y INTEGER NOT NULL
                 )
             ''')
+            print("Tabela 'Local' criada.")
             
-            valores_z = list(range(1, 100))
-            valores_x = list(cg.string.ascii_uppercase)
-            valores_y = list(range(1, 100))
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Stock'")
+        if cursor.fetchone() is None:
+            cursor.execute('''
+                CREATE TABLE Stock (
+                    id_interne INTEGER PRIMARY KEY AUTOINCREMENT,
+                    code_interne TEXT NOT NULL,
+                    produt INTEGER,
+                    local INTEGER,
+                    FOREIGN KEY (produt) REFERENCES Products(id_prod),
+                    FOREIGN KEY (local) REFERENCES Local(id_local)
+                )           
+            ''')
+            print("Tabela 'Stock' criada.")
+        
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Orders'")
+        if cursor.fetchone() is None:
+            cursor.execute('''
+                CREATE TABLE Orders (
+                    id_order INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user INTEGER,
+                    code_interne INTEGER,
+                    solicitante TEXT NOT NULL,
+                    setor TEXT,
+                    date_time TEXT NOT NULL,
+                    FOREIGN KEY (user) REFERENCES Users(id_user),
+                    FOREIGN KEY (code_interne) REFERENCES Stock(id_interne)
+                )                
+            ''')
+            print("Tabela 'Order' criada.")
+                
+            #Colocando os valores na tabela Local
+            valores_z = list(cg.string.ascii_uppercase)
+            valores_x = list(range(1, 10))
+            valores_y = list(range(1, 16))
             
             for z in valores_z:
                 for x in valores_x:
@@ -161,13 +217,13 @@ def create_DB(db_caminho):
                             VALUES (?, ?, ?)
                         ''', (z, x, y))
         
-            print("Tabela 'Local' criada.")
+            print("Tabela 'Local' criada com seus valores.")
         
         conexao.commit()
         conexao.close()
 
 # Caminho do banco de dados
-db_caminho = 'env/db/control.db'
+# db_caminho = 'env/db/control.db'
 
-# Criar ou verificar se o banco de dados e as tabelas existem
-create_DB(db_caminho)
+# # Criar ou verificar se o banco de dados e as tabelas existem
+# create_DB(db_caminho)

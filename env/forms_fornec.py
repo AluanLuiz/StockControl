@@ -147,15 +147,14 @@ class Regist_Forn:
                     else:
                         cg.msg.showwarning("Alerta", "Insira outro contato para o registro!")
                         return False
-                    
+            return True        
+        
         except:
             cg.msg.showerror("Erro", "Não foi possível salvar o registro do fornecedor")
             return
         
         finally:
             cursor.close()
-        
-        return True
     
     #-----------------------
     # Formatação do campo CNPJ

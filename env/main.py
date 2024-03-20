@@ -60,12 +60,12 @@ class StockControl:
         #---------
         #--------- ↓ Botão dar baixa (retirada do estoque)
         self.bt_Requisition_order = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text=("Ordem de \n Requisição"), 
-                                                 font=font_4, width=button_width, height=button_height, bd=0, highlightthickness=0)
+                                                 font=font_4, width=button_width, height=button_height, bd=0, highlightthickness=0, command=self.cmd_order)
         self.bt_Requisition_order.grid(row=0, column=0, padx=10, pady=10)
         #--------- 
         #--------- ↓ Botão dar baixa (retirada do estoque)
         self.bt_cad_user= cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text="Cadastrar \n usuário", font=font_4, 
-                                       width=button_width, height=button_height, bd=0, highlightthickness=0)
+                                       width=button_width, height=button_height, bd=0, highlightthickness=0, command=self.cmd_regisUser)
         self.bt_cad_user.grid(row=0, column=3, padx=10, pady=10)
         #---------
         #--------- ↓ Botão de login
@@ -115,12 +115,22 @@ class StockControl:
     #--------------------------
     #--↓ Comandos dos botões:
     
-    def cmd_regisProd(self):
+    def cmd_regisProd(self): # Inicia o formulario de Registro de um novo Porduto
         cg.rp.init_regis_prod()
         
-    def cmd_regisFornec(self):
-        cg.ff.init_regis_fornec()         
-        
+    # def cmd_regisFornec(self): # Inicia o formulario de Registro de um novo Fornecedor
+    #     cg.ff.init_regis_fornec()         
+    
+    def cmd_regisUser(self): # Inicia o formulario de Registro de um novo Usuário
+        lvl_u = int(lvl)
+        if lvl_u >= 3:
+            cg.ru.init_CadUser()
+        else:
+            cg.msg.showerror("Erro", "O usuário {name}, não tem acesso a essa função.")
+            
+    def cmd_order(self):
+        cg.order.init_orders()
+            
 #------------------------------------------
 
 if __name__ == "__main__":

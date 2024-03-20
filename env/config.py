@@ -1,7 +1,11 @@
+#------------------------------------------
+# Interface
 import tkinter as tk
 from tkinter import messagebox as msg
 from tkinter import font
 
+#------------------------------------------
+#Outras bibliotecas
 import re
 import string
 
@@ -19,7 +23,7 @@ def init_config():
     database.create_DB(db_path)
 
 #------------------------------------------
-#Caminho imagens
+#Caminho imagens padrões
 image_path = "env/image"
 default_images = {
     "user_icon": os.path.join(image_path, "user_icon1.png"),
@@ -34,6 +38,6 @@ import log #login
 import main #Principal
 import register_prod as rp #Registrar produto
 import register_user as ru #Registrar usuário
-import requisition_order as ro #Ordem de Requisiçao
+import order #Ordem de Requisiçao/Devolção
 import write_off_prod as wp #Dar Baixa estoque/produto
 import forms_fornec as ff #Registro de novo fornecedor
