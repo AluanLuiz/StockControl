@@ -8,6 +8,7 @@ from tkinter import font
 #Outras bibliotecas
 import re
 import string
+import datetime as dt
 
 #------------------------------------------
 #Banco de Dados
@@ -27,11 +28,15 @@ def init_config():
 image_path = "env/image"
 default_images = {
     "user_icon": os.path.join(image_path, "user_icon1.png"),
-    "product_icon": os.path.join(image_path, "product_icon.png"),
-    "warehouse_icon": os.path.join(image_path, "warehouse_icon1.png"),
-    "menu_icon": os.path.join(image_path, "menu_icon1.png")
+    "add_icon": os.path.join(image_path, "plus_icon.png"),
+    "minus_icon": os.path.join(image_path, "minus_icon.png"),
+    "eye_look_icon" : os.path.join(image_path, "eye_look_icon.png"),
+    "eye_view_icon" : os.path.join(image_path, "eye_view_icon.png")
 }
-
+# Icones nao usados, ainda...
+# "product_icon": os.path.join(image_path, "product_icon.png"),
+# "menu_icon": os.path.join(image_path, "menu_icon1.png"),
+# "warehouse_icon": os.path.join(image_path, "warehouse_icon1.png"),
 #------------------------------------------
 #Modulos _py
 import log #login

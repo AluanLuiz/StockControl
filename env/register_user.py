@@ -9,6 +9,9 @@ class User_Cad:
         
         self.conect = cg.sql.connect(cg.db_cam) 
         
+        self.eye_1 = cg.tk.PhotoImage(file=cg.default_images["eye_look_icon"])
+        self.eye_2 = cg.tk.PhotoImage(file=cg.default_images["eye_view_icon"])
+        
         self.frame_ent = cg.tk.Frame(self.new)
         self.frame_ent.grid(row=0, column=0, columnspan=4, sticky="ew")
         
@@ -36,7 +39,7 @@ class User_Cad:
         #---------
         
         #--------- ↓ Senha 1
-        self.password_one = cg.tk.Label(self.frame_ent, font=font_1, text="Digite uma senha,\n mínimo de 6 caracteres:")
+        self.password_one = cg.tk.Label(self.frame_ent, font=font_1, text="Digite uma senha:")
         self.password_one.grid(row=1, column=0, padx=10, pady=10)
         #--
         self.ent_pass_one = cg.tk.Entry(self.frame_ent, font=font_2, width=20, show="*")
@@ -76,8 +79,24 @@ class User_Cad:
         #--------- ↓ Botão Cancelar e Sair
         self.cancel = cg.tk.Button(self.frame_bt, text="Cancelar e \n Sair", font=font_Btn, 
                                        width=12, height=2, bd=4, highlightthickness=3,  command=self.end_ents)   
-        self.cancel.grid(row=0, column=0, columnspan=1, padx=10, pady=10)
+        self.cancel.grid(row=0, column=1, columnspan=1, padx=10, pady=10)
         
+        #--------- ↓ Botão Senha Visivel/Camuflada
+        self.bt_viewpass = cg.tk.Button(self.frame_bt, image=self.eye_2, bd=0, highlightthickness=0, command=self.visib_password)
+        self.bt_viewpass.grid(row=0, column=0, padx=10, pady=10)
+                
+    #-----------------------------
+    
+    def visib_password(self): # Visualizar os campos de senha
+        if self.ent_pass_one['show'] == '*':
+            self.ent_pass_one['show'] = ''
+            self.ent_pass_two['show'] = ''
+            self.bt_viewpass.config(image=self.eye_2)
+        else:
+            self.ent_pass_one['show'] = '*'
+            self.ent_pass_two['show'] = '*'
+            self.bt_viewpass.config(image=self.eye_1)
+    
     #-----------------------------
     
     def save_user(self):
@@ -175,5 +194,7 @@ class User_Cad:
 def init_CadUser():
     cad_u = cg.tk.Tk()
     app = User_Cad(cad_u)
-    cad_u.geometry("530x380")
+    cad_u.geometry("530x360")
     cad_u.mainloop()
+    
+# init_CadUser()

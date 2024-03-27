@@ -59,7 +59,7 @@ class StockControl:
         self.bt_darBaixa.grid(row=0, column=1, padx=10, pady=10)
         #---------
         #--------- ↓ Botão dar baixa (retirada do estoque)
-        self.bt_Requisition_order = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text=("Ordem de \n Requisição"), 
+        self.bt_Requisition_order = cg.tk.Button(self.frame_buttons, bg="#D9D9D9", text=("Nova Ordem"), 
                                                  font=font_4, width=button_width, height=button_height, bd=0, highlightthickness=0, command=self.cmd_order)
         self.bt_Requisition_order.grid(row=0, column=0, padx=10, pady=10)
         #--------- 
