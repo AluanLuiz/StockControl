@@ -9,21 +9,23 @@ class User_Cad:
         
         self.conect = cg.sql.connect(cg.db_cam) 
         
-        self.eye_1 = cg.tk.PhotoImage(file=cg.default_images["eye_look_icon"])
-        self.eye_2 = cg.tk.PhotoImage(file=cg.default_images["eye_view_icon"])
-        
-        self.frame_ent = cg.tk.Frame(self.new)
+        self.frame_ent = cg.tk.Frame(self.new, bg="#D9D9D9")
         self.frame_ent.grid(row=0, column=0, columnspan=4, sticky="ew")
         
-        self.frame_bt = cg.tk.Frame(self.new)
+        self.frame_bt = cg.tk.Frame(self.new, bg="#D9D9D9")
         self.frame_bt.grid(row=1, column=0, columnspan=4, sticky="ew")
         
         self.new.grid_rowconfigure(2, weight=1)
         self.new.grid_columnconfigure((0, 1, 2, 3), weight=1)
         
+        self.frame_bt.grid_rowconfigure(1, weight=1)
+        self.frame_bt.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        
+        self.frame_ent.grid_rowconfigure(2, weight=1)
+        self.frame_ent.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+        
         self.entrys()
         self.buttons()
-
     #-----------------------------
 
     def entrys(self):
@@ -31,31 +33,37 @@ class User_Cad:
         font_2 = ("Arial", 14)
         
         #--------- ↓ Nome
-        self.name = cg.tk.Label(self.frame_ent, text="Nome de usuário:", font=font_1)
+        self.name = cg.tk.Label(self.frame_ent, text="Nome de usuário:", font=font_1, bg="#D9D9D9")
         self.name.grid(row=0, column=0, padx=10, pady=10)
         #--
         self.ent_name = cg.tk.Entry(self.frame_ent, font=font_2, width=20)
-        self.ent_name.grid(row=0, column=2, columnspan=2, padx=10, pady=10)
+        self.ent_name.grid(row=0, column=1, columnspan=3, padx=10, pady=10)
         #---------
         
         #--------- ↓ Senha 1
-        self.password_one = cg.tk.Label(self.frame_ent, font=font_1, text="Digite uma senha:")
+        self.password_one = cg.tk.Label(self.frame_ent, font=font_1, bg="#D9D9D9", text="Digite uma senha:")
         self.password_one.grid(row=1, column=0, padx=10, pady=10)
         #--
         self.ent_pass_one = cg.tk.Entry(self.frame_ent, font=font_2, width=20, show="*")
-        self.ent_pass_one.grid(row=1, column=2, columnspan=2, padx=10, pady=10)
+        self.ent_pass_one.grid(row=1, column=1, columnspan=3, padx=10, pady=10)
         #--------- 
         
         #--------- ↓ Senha 2
-        self.password_two = cg.tk.Label(self.frame_ent, font=font_1, text="Repita a senha:")
+        self.password_two = cg.tk.Label(self.frame_ent, font=font_1, bg="#D9D9D9", text="Repita a senha:")
         self.password_two.grid(row=2, column=0, padx=10, pady=10)
         #--
         self.ent_pass_two = cg.tk.Entry(self.frame_ent, font=font_2, width=20, show="*")
         self.ent_pass_two.grid(row=2, column=2, columnspan=2, padx=10, pady=10)
         #--------- 
         
+        #--------- ↓ Botão Exibir/Ocultar senha
+        self.bt_passView = cg.tk.Button(self.frame_ent,  font=font_2, text="Exibir", 
+                                        width=6, height=1, bd=2, highlightthickness=2, command=self.visib_password)
+        self.bt_passView.grid(row=2, column=4, padx=10, pady=10)
+        #---------
+        
         #--------- ↓ Level User
-        self.lvl_us = cg.tk.Label(self.frame_ent, font=font_1, text="Nível de Usuário:")
+        self.lvl_us = cg.tk.Label(self.frame_ent, font=font_1, bg="#D9D9D9", text="Nível de Usuário:")
         self.lvl_us.grid(row=3, column=0, padx=10, pady=10)
         #--
         self.lvl_var = cg.tk.StringVar(self.frame_ent)
@@ -74,16 +82,12 @@ class User_Cad:
         #--------- ↓ Botão Salvar
         self.save_forms = cg.tk.Button(self.frame_bt, text="Salvar o \n Usuário", font=font_Btn,
                                        width=12, height=2, bd=4, highlightthickness=3, command=self.save_user)   
-        self.save_forms.grid(row=0, column=3, columnspan=1, padx=10, pady=10)
+        self.save_forms.grid(row=0, column=2, columnspan=1, padx=10, pady=10)
         
         #--------- ↓ Botão Cancelar e Sair
         self.cancel = cg.tk.Button(self.frame_bt, text="Cancelar e \n Sair", font=font_Btn, 
                                        width=12, height=2, bd=4, highlightthickness=3,  command=self.end_ents)   
-        self.cancel.grid(row=0, column=1, columnspan=1, padx=10, pady=10)
-        
-        #--------- ↓ Botão Senha Visivel/Camuflada
-        self.bt_viewpass = cg.tk.Button(self.frame_bt, image=self.eye_2, bd=0, highlightthickness=0, command=self.visib_password)
-        self.bt_viewpass.grid(row=0, column=0, padx=10, pady=10)
+        self.cancel.grid(row=0, column=0, columnspan=1, padx=10, pady=10)
                 
     #-----------------------------
     
@@ -91,11 +95,11 @@ class User_Cad:
         if self.ent_pass_one['show'] == '*':
             self.ent_pass_one['show'] = ''
             self.ent_pass_two['show'] = ''
-            self.bt_viewpass.config(image=self.eye_2)
+            self.bt_passView.config(text="Ocultar")
         else:
             self.ent_pass_one['show'] = '*'
             self.ent_pass_two['show'] = '*'
-            self.bt_viewpass.config(image=self.eye_1)
+            self.bt_passView.config(text="Exibir")
     
     #-----------------------------
     
@@ -180,9 +184,9 @@ class User_Cad:
             return 3
         else:
             return False
-           
+       
     #-----------------------------
-        
+          
     def end_ents(self):
         self.ent_name.delete(0, cg.tk.END)
         self.ent_pass_one.delete(0, cg.tk.END)
@@ -197,4 +201,4 @@ def init_CadUser():
     cad_u.geometry("530x360")
     cad_u.mainloop()
     
-# init_CadUser()
+#init_CadUser()

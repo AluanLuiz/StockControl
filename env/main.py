@@ -7,8 +7,10 @@ class StockControl:
         self.master = master
         self.master.title("Controle de Estoque")
         self.conect = cg.sql.connect(cg.db_cam)
+        
         self.start_config()
-         
+        #self.imgs = load_img_db()
+        
         self.frame_title = cg.tk.Frame(self.master, bg="#D9D9D9")
         self.frame_title.grid(row=0, column=0, columnspan=5, sticky="ew")
         
@@ -22,7 +24,7 @@ class StockControl:
         self.master.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
         
         self.add_title()
-        self.add_list()
+        self.add_list() 
         self.add_Btn()
         self.load_listview()
         self.reload()
@@ -90,7 +92,7 @@ class StockControl:
         self.listViewer.delete(0, cg.tk.END)
         
         cursor = self.conect.cursor()
-        cursor.execute('''SELECT bar_code, name_simple, description, id_local, qtde
+        cursor.execute('''SELECT bar_code, name_simple, description, qtde
                        FROM Products
                        ''')
         load_prod = cursor.fetchall()
@@ -101,13 +103,13 @@ class StockControl:
             # print(info_prod)
             
     def format_info(self, item):
-        return f"C.B. {item[0]}, {item[1]}, descrição: {item[2]} | Local: {item[3]} - Quantidade: {item[4]}"\
+        return f"C.B. {item[0]}, {item[1]}, descrição: {item[2]} | Quantidade: {item[3]}"\
     
     #--------------------------
     def start_config(self):
         cg.init_config()        
       
-    # def login_valid(self):
+    # def login_valid(self):    
     #     self.ident, self.name, self.lvl = cg.log.init_log()
     #     if self.ident:
     #         self.log_user_lbl.config(text=f"{self.name} - {self.ident} ({self.lvl})")
@@ -130,8 +132,17 @@ class StockControl:
             
     def cmd_order(self):
         cg.order.init_orders()
-            
+    
+
 #------------------------------------------
+def images(self):
+    self.eye_look = cg.tk.PhotoImage(file=cg.default_images["eye_look"])
+    self.eye_view = cg.tk.PhotoImage(file=cg.default_images["eye_view"])
+    self.user_icn = cg.tk.PhotoImage(file=cg.default_images["user"])
+    self.add = cg.tk.PhotoImage(file=cg.default_images["add"])
+    self.minus = cg.tk.PhotoImage(file=cg.default_images["minus"])
+    
+#-----------------------------
 
 if __name__ == "__main__":
     iden, name, lvl = cg.log.init_log()

@@ -75,16 +75,36 @@ def create_DB(db_caminho):
                 )                
             ''')
             
+            #- Tabela para caminho das imagens/icon
+            cursor.execute('''
+                CREATE TABLE Images (
+                    id INTEGER PRIMARY KEY,
+                    path TEXT
+                )                
+            ''')
+                        
+            cursor.execute('''
+                INSERT INTO Images (path)
+                    VALUES (?), (?), (?), (?), (?)
+                ''', (
+                "env/image/user_icon1.jpg",
+                "env/image/plus_icon.jpg",
+                "env/image/minus_icon.jpg",
+                "env/image/eye_look_icon.jpg",
+                "env/image/eye_view_icon.jpg"
+                ))
+            #-
+            
             # Inserir usuário mestre
             cursor.execute('''
                 INSERT INTO Users (name_user, password, user_level)
                     VALUES (?, ?, ?)
-                ''', ('Admin', 'Teste1', '4'))
+                ''', ('Dev', '12', '4'))
             
             #Colocando os valores na tabela Local
             valores_z = list(cg.string.ascii_uppercase)
             valores_x = list(range(1, 10))
-            valores_y = list(range(1, 16))
+            valores_y = list(range(1, 11))
             
             for z in valores_z:
                 for x in valores_x:
@@ -126,9 +146,10 @@ def create_DB(db_caminho):
             cursor.execute('''
                 INSERT INTO Users (name_user, password, user_level)
                     VALUES (?, ?, ?)
-                ''', ('Admin', 'Teste1', '4'))
+                ''', ('Dev', '12', '4'))
             
             print("Tabela 'Users' criada.")
+        
         
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Products'")
         if cursor.fetchone() is None:
@@ -148,6 +169,7 @@ def create_DB(db_caminho):
             ''')
             print("Tabela 'Products' criada.")
         
+        
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Fornecedores'")
         if cursor.fetchone() is None:
             # Tabela Fornecedores não existe, criá-la
@@ -160,6 +182,7 @@ def create_DB(db_caminho):
                 )
             ''')
             print("Tabela 'Fornecedores' criada.")
+            
             
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Local'")
         if cursor.fetchone() is None:
@@ -174,6 +197,7 @@ def create_DB(db_caminho):
             ''')
             print("Tabela 'Local' criada.")
             
+            
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Stock'")
         if cursor.fetchone() is None:
             cursor.execute('''
@@ -187,6 +211,7 @@ def create_DB(db_caminho):
                 )           
             ''')
             print("Tabela 'Stock' criada.")
+        
         
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Orders'")
         if cursor.fetchone() is None:
@@ -207,7 +232,7 @@ def create_DB(db_caminho):
             #Colocando os valores na tabela Local
             valores_z = list(cg.string.ascii_uppercase)
             valores_x = list(range(1, 10))
-            valores_y = list(range(1, 16))
+            valores_y = list(range(1, 11))
             
             for z in valores_z:
                 for x in valores_x:
@@ -219,11 +244,34 @@ def create_DB(db_caminho):
         
             print("Tabela 'Local' criada com seus valores.")
         
+        
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Images'")
+        if cursor.fetchone() is None:
+            #- Tabela para caminho das imagens/icon
+            cursor.execute('''
+                CREATE TABLE Images (
+                    id INTEGER PRIMARY KEY,
+                    path TEXT
+                )                
+            ''')
+                      
+            cursor.execute('''
+                INSERT INTO Images (path)
+                    VALUES (?), (?), (?), (?), (?)
+                ''', (
+                "env/image/user_icon1.jpg",
+                "env/image/plus_icon.jpg",
+                "env/image/minus_icon.jpg",
+                "env/image/eye_look_icon.jpg",
+                "env/image/eye_view_icon.jpg"
+                ))
+            #-
+
         conexao.commit()
         conexao.close()
 
 # Caminho do banco de dados
-# db_caminho = 'env/db/control.db'
+#db_caminho = 'env/db/control.db'
 
 # # Criar ou verificar se o banco de dados e as tabelas existem
-# create_DB(db_caminho)
+#create_DB(db_caminho)

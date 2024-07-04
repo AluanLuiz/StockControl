@@ -25,18 +25,29 @@ def init_config():
 
 #------------------------------------------
 #Caminho imagens padrões
+# def load_image_paths(db_path):
+#     connection = sql.connect(db_path)
+#     cursor = connection.cursor()
+#     try:
+#         cursor.execute("SELECT path FROM Images")
+#         paths = cursor.fetchall()
+#         return [path[0] for path in paths]
+#     except sql.Error as e:
+#         print(f"Erro ao carregar caminhos das imagens: {str(e)}")
+#         return []
+#     finally:
+#         cursor.close()
+#         connection.close()
+
 image_path = "env/image"
 default_images = {
-    "user_icon": os.path.join(image_path, "user_icon1.png"),
-    "add_icon": os.path.join(image_path, "plus_icon.png"),
-    "minus_icon": os.path.join(image_path, "minus_icon.png"),
-    "eye_look_icon" : os.path.join(image_path, "eye_look_icon.png"),
-    "eye_view_icon" : os.path.join(image_path, "eye_view_icon.png")
-}
-# Icones nao usados, ainda...
-# "product_icon": os.path.join(image_path, "product_icon.png"),
-# "menu_icon": os.path.join(image_path, "menu_icon1.png"),
-# "warehouse_icon": os.path.join(image_path, "warehouse_icon1.png"),
+    "user": os.path.join(image_path, "user_icon1.jpeg"),
+    "add": os.path.join(image_path, "plus_icon.jpeg"),
+    "minus": os.path.join(image_path, "minus_icon.jpeg"),
+    "eye_look" : os.path.join(image_path, "eye_look_icon.jpeg"),
+    "eye_view" : os.path.join(image_path, "eye_view_icon.jpeg")
+  }
+
 #------------------------------------------
 #Modulos _py
 import log #login
