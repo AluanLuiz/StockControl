@@ -1,0 +1,7 @@
+O projeto StockControl_2.0 foi iniciado com o intuito de estudar na prática as bibliotecas TKinter e SQLite.
+Após algumas leituras na documentaçao e assistindo videos sobre TKinter, percebi que meu projeto estava parcialmente correto do ponto de vista "comercial",
+portanto irei "arquivar" este projeto por nao ser viavel realizar uma grande alteraçao no código atual iniciar um novo e irei iniciar um novo projeto StockControl_3.0 
+utilizando este código como base, conceitos atuais de interface e principalmente melhorias nas funçoes que acredito estar falhas mesmo funcionando.
+
+Obrigado por compreender.
+-AluanLuiz
