@@ -16,7 +16,7 @@ import sqlite3 as sql
 import os
 import database
 
-db_cam = "env/db/control.db"
+db_cam = "v2_0/db/control.db"
 def init_config():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(dir_atual, "db", "control.db")
